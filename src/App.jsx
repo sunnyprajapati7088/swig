@@ -13,7 +13,7 @@ function App() {
   return (
     <Cordinates.Provider value={{cord,setCord}}>
       <Visibly.Provider value={{ visible, setVisible }}>
-        <div>
+        <div className="">
           <Routes>
             <Route path="/" element={<Navbar />}>
               <Route path="/" element={<Body />}></Route>

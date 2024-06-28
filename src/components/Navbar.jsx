@@ -19,10 +19,11 @@ export function Navbar() {
     setSearch(result?.data);
     console.log(search);
   }
+  const [place,setPlace]=useState("");
 
   const {cord ,setCord}=useContext(Cordinates);
   console.log(cord);
-  async function funLanAndLog(id){
+  async function funLanAndLog(id,placename){
     
     console.log(id);
     if(id=="")return
@@ -34,6 +35,7 @@ export function Navbar() {
       lat:result.data[0].geometry.location.lat,
       lng:result.data[0].geometry.location.lng
     });
+  setPlace(placename)
   }
 
   return (
@@ -70,7 +72,7 @@ export function Navbar() {
                   {search.map(({
                     structured_formatting: { main_text, secondary_text },place_id
                   },i)=>(
-                  <li key={i} onClick={()=>funLanAndLog(place_id)} >
+                  <li key={i} onClick={()=>funLanAndLog(place_id,secondary_text )} >
                 <div className="flex gap-2 w-[90%]" >  
                 <i className="fi fi-rs-marker"></i>
                 <h1 className="w-full">{main_text}</h1></div>
@@ -102,8 +104,9 @@ export function Navbar() {
             >
               Other
             </h1>
-            <p>{search?.structured_formatting?.secondary_text} </p>
-            <i className="fi fi-rs-angle-down mt-2 ml-5 text-[#FC8019] font-bold"></i>
+            <p className="ml-2 max-w-h[180px] overflow-hidden opacity-85 line-clamp-1">{place} </p>
+            {console.log(place)}
+            <i className="fi fi-rs-angle-down mt-2 ml-2 text-[#FC8019] font-bold"></i>
           </div>
 
           <div className="flex justify-between items-center w-[60%]  ">

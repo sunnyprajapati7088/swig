@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom"
 
-export function Restro({data}){ 
+export function Restro({information}){ 
 
+    
+    var data=information?.restrodata;
     console.log(data);
+
    
 
     return (
         <div >
-            <div>
-                     Restaurants with online food delivery in Dehradun
+            <div className="text-[16px] font-bold ">
+                     {information.isTitle.onlineTitle}
+                     {console.log(information.isTitle.onlineTitle)}
             </div>
             
       <div  className=" w-full grid grid-cols-4 gap-6">

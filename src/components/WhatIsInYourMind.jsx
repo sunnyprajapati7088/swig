@@ -1,7 +1,11 @@
 import { useEffect,useState } from "react";
 
-export function WhatIsInYourMind({data}){
+export function WhatIsInYourMind({info}){
     // const [data, setdata] = useState([]);
+    console.log(info)
+   var data=info?.inyourmind;
+   console.log(info.isTitle.inMindTitle);
+    
     const [value, setvalue] = useState(0);
     // async function fetchdata() {
     //   const data = await fetch(
@@ -31,7 +35,7 @@ export function WhatIsInYourMind({data}){
       <div className="mt-4 ">
       
       <div className="flex w-full justify-between">
-      <h1 className=" font-bold">What is in your Mind?</h1>
+      <h1 className=" font-bold">{info?.isTitle.inMindTitle}</h1>
       <div className="flex items-center w-[50px] justify-around">
         <div onClick={handleprev} className="cursor-pointer">
           <i className="fi fi-ts-arrow-circle-left"></i>

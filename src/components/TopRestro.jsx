@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-export function TopRestro({ data }) {
+export function TopRestro({ info }) {
   const [value, setvalue] = useState(0);
+  const data=info?.restrodata;
+  console.log(info.isTitle.topTitle);
   // const [data, setdata] = useState([]);
   // async function fetchdata() {
   //   const data = await fetch(
@@ -36,7 +38,7 @@ export function TopRestro({ data }) {
   return (
     <div className="mt-8 ">
       <div className="flex w-full justify-between ">
-        <h1>TopRestro</h1>
+        <h1 className="font-bold text-[20px]">{info.isTitle.topTitle}</h1>
         <div className="flex items-center w-[60px] justify-around">
           <div onClick={handleprev} className="cursor-pointer">
             <i className="fi fi-ts-arrow-circle-left"></i>
