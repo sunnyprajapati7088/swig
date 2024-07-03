@@ -1,11 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Cordinates, Visibly } from "./Context/Contextapi";
-
+import { Cartcontext, Cordinates, Visibly } from "./Context/Contextapi";
+import { useDispatch, useSelector } from "react-redux";
+import togleSlice, { toglesearch } from "../utiliti/togleSlice";
 export function Navbar() {
-  const { visible, setVisible } = useContext(Visibly);
+  // const { visible, setVisible } = useContext(Visibly);
+  const {cartData,setCartData}=useContext(Cartcontext);
+  const dispatch=useDispatch();
+  const visible=useSelector((state)=>state.togleSlice.searchTogle)
+ 
+
   function visiblity() {
-    setVisible((prev) => !prev);
+    // setVisible((prev) => !prev);
+    dispatch(toglesearch());
+
   }
   const [search, setSearch] = useState([]);
   async function fetchPlace(val) {
@@ -39,7 +47,7 @@ export function Navbar() {
   }
 
   return (
-    <div className="w-full relative ">
+    <div className="w-full relative z-25">
       {visible && (
         <div className="w-full">
           <div
@@ -132,10 +140,10 @@ export function Navbar() {
               <i className="fi mr-2 fi-rs-driver-man"></i>
               <p className="font-bold">Sign in</p>
             </div>
-            <div className="flex items-center  hover:text-[#FC8019]">
+            <Link to={"/Cart"} className="flex items-center  hover:text-[#FC8019]">
               <i className="fi mr-2 fi-ts-cart-arrow-down"></i>
-              <p className="font-bold">Cart</p>
-            </div>
+              <p className="font-bold relative">Cart <sup className="w-4 h-4  absolute text-center mx-auto pt-2 rounded-xl bg-red-600">{cartData.length}</sup></p>
+            </Link>
           </div>
         </div>
         <Outlet />

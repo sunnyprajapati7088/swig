@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { Cartcontext } from "./Context/Contextapi";
 
 function RestrorentMenu() {
   const [menu, setmenu] = useState([]);
@@ -7,6 +8,7 @@ function RestrorentMenu() {
   const [offer, setoffer] = useState([]);
   const [togle, settogle] = useState(0);
   const [top, setTop] = useState([]);
+ 
 
   const { id } = useParams();
 
@@ -178,14 +180,34 @@ function Showmenu({ title, itemCards }) {
   );
 }
 
+
 function Detailmenu({ itemCards }) {
+  console.log(itemCards)
+  const {cartData,setCartData}=useContext(Cartcontext)
+  
+  function handleadd(iid){
+    cartData.find((data)=>data.id===iid.id)?`${alert("already added")}`: setCartData((pre)=>[...pre,iid])
+    console.log(cartData);
+    localStorage.setItem("cartData",JSON.stringify([...cartData,iid]))
+   
+  }
+  function getdata() {
+    let data = JSON.parse(localStorage.getItem("cartData")) || []
+      ;
+    setCartData(data);
+  }
+  
+  useEffect(() => {
+    getdata();
+  },[])
+
   return (
     <div className="">
       {itemCards.map(
         (
           {
             card: {
-              info: {
+              info: {id,
                 description,
                 name,
                 price,
@@ -241,7 +263,7 @@ function Detailmenu({ itemCards }) {
                     className=" w-[156px] h-[130px] mb-2 rounded-[20px] relative"
                     src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
                   ></img>
-                  <div className="w-[90px] h-[40px] bg-white font-bold pt-1 hover:bg-green-800 hover:text-white  rounded-xl absolute text-center items-center border-2 border-gray-400 text-green-700 shadow-lg">
+                  <div  onClick={()=>handleadd({price,name,id,imageId,description,vegClassifier,rating})} className="w-[90px] h-[40px] bg-white font-bold pt-1 hover:bg-green-800 hover:text-white  rounded-xl absolute text-center items-center border-2 border-gray-400 text-green-700 shadow-lg" >
                     ADD
                   </div>
                 </div>
@@ -315,7 +337,7 @@ function Toppick({ Top }) {
              
              <img
                
-             className="w-full h-full aspect-video object-cover rounded-2xl "
+             className=" w-[288px] h-[295px] aspect-video SS-cover rounded-2xl "
              src={
                "https://media-assets.swiggy.com/swiggy/image/upload/" +
                imageId

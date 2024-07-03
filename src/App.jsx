@@ -3,29 +3,35 @@ import { Navbar } from "./components/Navbar";
 import { Body } from "./components/Body";
 import { Outlet, Route, Routes } from "react-router-dom";
 import RestrorentMenu from "./components/RestrorentMenu";
-import { Visibly,Cordinates } from "./components/Context/Contextapi";
+import { Visibly,Cordinates, Cartcontext } from "./components/Context/Contextapi";
 
 import { useState } from "react";
+import { Cart } from "./components/Cart";
 
 function App() {
-  const [visible, setVisible] = useState(false);
+
   const [cord,setCord]=useState({lat:30.32750,lng:78.03250})
+  const [cartData,setCartData]=useState([]);
   return (
+    <Cartcontext.Provider value={{cartData,setCartData}}>
     <Cordinates.Provider value={{cord,setCord}}>
-      <Visibly.Provider value={{ visible, setVisible }}>
+    
         <div className="">
           <Routes>
             <Route path="/" element={<Navbar />}>
               <Route path="/" element={<Body />}></Route>
-              <Route
+                <Route
                 path="/RestrorentMenu/:pizza/-/:locality/-/:id"
-                element={<RestrorentMenu />}
-              ></Route>
-            </Route>
+                element={<RestrorentMenu />}></Route>
+                <Route path="/Cart" element={<Cart/>}> </Route>
+             </Route>
+            
           </Routes>
         </div>
-      </Visibly.Provider>
+     
     </Cordinates.Provider>
+    
+    </Cartcontext.Provider>
   );
 }
 
