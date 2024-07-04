@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Cartcontext } from "./Context/Contextapi";
-
+import toast ,{Toaster} from "react-hot-toast";
 function RestrorentMenu() {
   const [menu, setmenu] = useState([]);
   const [ResInfo, setResInfo] = useState([]);
@@ -184,17 +184,25 @@ function Showmenu({ title, itemCards }) {
 function Detailmenu({ itemCards }) {
   console.log(itemCards)
   const {cartData,setCartData}=useContext(Cartcontext)
-  
-  function handleadd(iid){
-    cartData.find((data)=>data.id===iid.id)?`${alert("already added")}`: setCartData((pre)=>[...pre,iid])
-    console.log(cartData);
-    localStorage.setItem("cartData",JSON.stringify([...cartData,iid]))
-   
-  }
+  console.log(
+    cartData
+  );
   function getdata() {
     let data = JSON.parse(localStorage.getItem("cartData")) || []
       ;
     setCartData(data);
+  }
+  
+
+  function handleadd(iid){
+   if( cartData.find((data)=>data.id===iid.id))
+    {toast.error("already added")}
+    else{
+      setCartData((pre)=>[...pre,iid],toast.success("item added"))
+    } 
+    console.log(cartData);
+    localStorage.setItem("cartData",JSON.stringify([...cartData,iid]))
+   
   }
   
   useEffect(() => {
@@ -203,6 +211,7 @@ function Detailmenu({ itemCards }) {
 
   return (
     <div className="">
+    <Toaster/>
       {itemCards.map(
         (
           {

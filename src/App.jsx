@@ -12,6 +12,7 @@ function App() {
 
   const [cord,setCord]=useState({lat:30.32750,lng:78.03250})
   const [cartData,setCartData]=useState([]);
+  console.log(cartData);
   return (
     <Cartcontext.Provider value={{cartData,setCartData}}>
     <Cordinates.Provider value={{cord,setCord}}>

@@ -25,7 +25,7 @@ export function Cart(){
     console.log(i);
       
     }
-  
+
 console.log(cartData);
      return (
 
